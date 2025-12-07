@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Sign Up</title>
+</head>
+
+<body>
+    <div class="main-login-form">
+        <div class="login-form-label">
+            <h2>Create Account</h2>
+        </div>
+        <form id="signupForm" class="login-form">
+            <input id="username" maxlength="30" minlength="3" required class="username-input" type="text"
+                placeholder="username" />
+            <input id="email" required class="username-input" type="email" placeholder="email" />
+            <input id="password" maxlength="30" minlength="5" required class="password-input" type="password"
+                placeholder="password" />
+            <input id="confirmPassword" maxlength="30" minlength="5" required class="password-input" type="password"
+                placeholder="confirm password" />
+            <div id="message" class="form-message" aria-live="polite"></div>
+            <button id="signupButton" class="login-button">Sign up</button>
+        </form>
+        <div class="divider">
+            <div class="line"></div>
+            <div class="or">Or</div>
+            <div class="line"></div>
+        </div>
+        <button class="google-login-button">
+            <div class="google-login-logo">
+                <img src="./google.svg" alt="google" />
+            </div>
+            <div class="google-login-text">sign up using google</div>
+        </button>
+        <div class="signup-link">Already have an account? <a href="index.html">Login</a></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            message.textContent = '';
+            message.classList.remove('error', 'success');
+
+            if (username.length < 3) {
+                showError('Username must be at least 3 characters');
+                return;
+            }
+
+            if (!email || !email.includes('@')) {
+                showError('Please enter a valid email');
+                return;
+            }
+
+            if (password.length < 5) {
+                showError('Password must be at least 5 characters');
+                return;
+            }
+
+            if (password !== confirm) {
+                showError('Passwords do not match');
+                return;
+            }
+
+            // Simple localStorage demo (no real auth). Passwords are stored in plain text here
+            // for the sake of the demo only — do NOT do this in production.
+            const storageKey = `user_${username.toLowerCase()}`;
+            const userObj = { username, email, password };
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(userObj));
+            } catch (err) {
+                // ignore storage errors
+            }
+
+            showSuccess('Account created! You can now log in.');
+            form.reset();
+        });
+
+        function showError(text) {
+            message.textContent = text;
+            message.classList.add('error');
+        }
+
+        function showSuccess(text) {
+            message.textContent = text;
+            message.classList.add('success');
+        }
+    </script>
+</body>
+
+</html>
