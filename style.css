@@ -1,0 +1,256 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+:root {
+    --normal-font: 1.3em;
+    --header-font: 1.7em;
+    --mobile-normal-font: 1em;
+    --button-padding: 0.5em;
+    --input-padding: 0.5em 1em;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    background-color: #5805ed;
+    /* user-provided image (place `background.jpg` in the same folder) */
+    background-image: url('./background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    font-family: "Poppins", sans-serif;
+}
+
+.main-login-form {
+    /* make the card semi-transparent so the background image shows through */
+    background: rgba(88, 5, 237, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: -20px -20px 40px rgba(255, 255, 255, 0.18),
+        20px 20px 40px rgba(0, 0, 0, 0.35);
+    border-radius: 30px;
+    padding: 2em 3em;
+    /* responsive width */
+    width: min(420px, calc(100vw - 2rem));
+    box-sizing: border-box;
+}
+
+.login-form-label {
+    text-align: center;
+    font-size: var(--header-font);
+}
+
+/* form styles */
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.username-input,
+.password-input {
+    background: #5805ed;
+    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.25),
+        inset 5px 5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    padding: var(--input-padding);
+    font-size: var(--normal-font);
+    font-weight: bold;
+    margin: 0.5em 0;
+    color: white;
+}
+
+.username-input::placeholder,
+.password-input::placeholder {
+    color: white;
+    font-weight: bold;
+}
+
+.username-input:focus,
+.password-input:focus {
+    border: 2px solid rgba(255, 255, 255, 0.327);
+}
+
+.login-button {
+    margin-top: 1em !important;
+    border-radius: 30px !important;
+}
+
+.login-button::before,
+.google-login-button::before {
+    clip-path: inset(0 100% 0 0);
+    background: white;
+    opacity: 1;
+    transition: 0.4s;
+}
+
+.login-button:hover::before,
+.google-login-button:hover::before {
+    clip-path: inset(0 0 0 0);
+}
+
+.login-button:hover,
+.google-login-button:hover {
+    color: #3c0793;
+}
+
+.login-button::before {
+    border-radius: 30px !important;
+}
+
+.login-button,
+.google-login-button {
+    width: 100%;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: var(--normal-font);
+    padding: var(--button-padding);
+    background: #3c0793;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25),
+        -5px -5px 10px rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    color: white;
+    transition: all 0.5s;
+    cursor: pointer;
+    transform: perspective(1px) translateZ(0);
+    position: relative;
+    /* ensure pseudo-element positions correctly */
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+.google-login-logo img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* ensure the google button content doesn't overflow on small screens */
+.google-login-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* or styles */
+.divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.line {
+    height: 0.1em;
+    width: 10em;
+    background: white;
+}
+
+.google-login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.google-login-button::before {
+    border-radius: 10px !important;
+}
+
+/* signup / message styles */
+.signup-link {
+    text-align: center;
+    margin-top: 1em;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.signup-link a {
+    color: white;
+    text-decoration: underline;
+}
+
+.form-message {
+    min-height: 1.4em;
+    margin: 0.4em 0;
+    text-align: center;
+    font-size: 0.95em;
+}
+
+.form-message.error {
+    color: #ffb3b3;
+}
+
+.form-message.success {
+    color: #b8ffb3;
+}
+
+/* media query */
+@media screen and (max-width: 700px) {
+    .main-login-form {
+        padding: 2em 1em;
+    }
+
+    .line {
+        width: 7em;
+    }
+
+    .username-input,
+    .password-input,
+    .login-button,
+    .google-login-button {
+        font-size: var(--mobile-normal-font);
+    }
+}
+
+/* tighter layout for very small screens */
+@media screen and (max-width: 420px) {
+    :root {
+        --normal-font: 1.05em;
+        --header-font: 1.25em;
+        --mobile-normal-font: 0.95em;
+        --button-padding: 0.45em;
+        --input-padding: 0.4em 0.8em;
+    }
+
+    .line {
+        width: 40%;
+    }
+
+    .main-login-form {
+        padding: 1.4em 0.9em;
+        border-radius: 18px;
+    }
+
+    .login-form-label {
+        font-size: var(--header-font);
+    }
+
+    .username-input,
+    .password-input {
+        font-size: var(--mobile-normal-font);
+    }
+
+    .signup-link {
+        font-size: 0.95em;
+    }
+}
+
+/* small accessibility and anchor reset */
+a {
+    color: inherit;
+}
