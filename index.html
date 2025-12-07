@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Login page</title>
+</head>
+
+<body>
+    <div class="main-login-form">
+        <div class="login-form-label">
+            <h2>Login</h2>
+        </div>
+        <form id="loginForm" class="login-form">
+            <input id="loginUsername" maxlength="30" minlength="3" required class="username-input" type="text"
+                placeholder="username" />
+            <input id="loginPassword" maxlength="30" minlength="5" required class="password-input" type="password"
+                placeholder="password" />
+            <div id="loginMessage" class="form-message" aria-live="polite"></div>
+            <button class="login-button">login</button>
+        </form>
+        <div class="divider">
+            <div class="line"></div>
+            <div class="or">Or</div>
+            <div class="line"></div>
+        </div>
+        <button class="google-login-button">
+            <div class="google-login-logo">
+                <img src="./google.svg" alt="" />
+            </div>
+            <div class="google-login-text">login using google</div>
+        </button>
+    </div>
+    <div class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></div>
+
+    <script>
+        // If already logged in, go to dashboard
+        const current = localStorage.getItem('currentUser');
+        if (current) {
+            window.location.href = 'dashboard.html';
+        }
+
+        const loginForm = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            loginMessage.textContent = '';
+            loginMessage.classList.remove('error', 'success');
+
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const storageKey = `user_${username.toLowerCase()}`;
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) {
+                showError('No account found for that username');
+                return;
+            }
+
+            let user;
+            try { user = JSON.parse(raw); } catch (err) { user = null; }
+            if (!user || user.password !== password) {
+                showError('Invalid username or password');
+                return;
+            }
+
+            // set an indicator that the user is logged in
+            localStorage.setItem('currentUser', user.username);
+            // redirect to dashboard
+            window.location.href = 'dashboard.html';
+        });
+
+        function showError(text) {
+            loginMessage.textContent = text;
+            loginMessage.classList.add('error');
+        }
+    </script>
+
+</body>
+
+</html>
